@@ -16,7 +16,7 @@ def get_train_valid_loader(data_dir,
                            random_seed,
                            valid_size=0.2,
                            shuffle=True,
-                           num_workers=args,
+                           args,
                            pin_memory=False,
                            ):
     """
@@ -85,15 +85,20 @@ def get_train_valid_loader(data_dir,
     train_idx, valid_idx = indices[split:], indices[:split]
     train_sampler = SubsetRandomSampler(train_idx)
     valid_sampler = SubsetRandomSampler(valid_idx)
-
-    train_loader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=batch_size, sampler=train_sampler,
-        num_workers=num_workers, pin_memory=pin_memory,drop_last=False
-    )
-    valid_loader = torch.utils.data.DataLoader(
+    if args.centralized == 1:
+         train_loader = torch.utils.data.DataLoader(
+              train_dataset, batch_size=batch_size, sampler=train_sampler,
+              pin_memory=pin_memory,drop_last=False)
+         valid_loader = torch.utils.data.DataLoader(
         valid_dataset, batch_size=batch_size, sampler=valid_sampler,
-        num_workers=num_workers, pin_memory=pin_memory,drop_last=False
-    )
+        pin_memory=pin_memory,drop_last=False)
+    else:
+         train_loader = torch.utils.data.DataLoader(
+              train_dataset, batch_size=batch_size, sampler=train_sampler, num_workers = args.num_workers,
+              pin_memory=pin_memory,drop_last=False)
+         valid_loader = torch.utils.data.DataLoader(
+        valid_dataset, batch_size=batch_size, sampler=valid_sampler, num_workers = args.num_workers
+        pin_memory=pin_memory,drop_last=False)
 
 
     return (train_loader, valid_loader)
@@ -101,8 +106,7 @@ def get_train_valid_loader(data_dir,
 
 def get_test_loader(data_dir,
                     batch_size,
-                    shuffle=True,
-                    num_workers=4,
+                    shuffle=True,args, 
                     pin_memory=False):
     """
     Utility function for loading and returning a multi-process
@@ -136,11 +140,16 @@ def get_test_loader(data_dir,
         root=data_dir, train=False,
         download=True, transform=transform,
     )
-
-    data_loader = torch.utils.data.DataLoader(
-        dataset, batch_size=batch_size, shuffle=shuffle,
-        num_workers=num_workers, pin_memory=pin_memory,
-    )
+    if args.centralized ==1:
+          data_loader = torch.utils.data.DataLoader(
+              dataset, batch_size=batch_size, shuffle=shuffle,
+              pin_memory=pin_memory,
+         )
+     else: 
+            data_loader = torch.utils.data.DataLoader(
+              dataset, batch_size=batch_size, shuffle=shuffle,
+              num_workers=num_workers, pin_memory=pin_memory,
+         )
 
     return data_loader
 
