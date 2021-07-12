@@ -7,13 +7,12 @@ from torchvision import transforms
 from torch.utils.data.sampler import SubsetRandomSampler
 from sampling import get_server,get_dict_labels,random_number_images, non_iid_unbalanced, iid_unbalanced, non_iid_balanced, iid_balanced
 import random
-from options_FedMA import args_parser
+from options import args_parser
+
 
 
 args = args_parser()
 def get_train_valid_loader(data_dir,
-                           batch_size,
-                           random_seed,
                            valid_size=0.2,
                            shuffle=True,
                            args,
@@ -79,7 +78,7 @@ def get_train_valid_loader(data_dir,
     split = int(np.floor(valid_size * num_train))
 
     if shuffle:
-        np.random.seed(random_seed)
+        np.random.seed(args.random_seed)
         np.random.shuffle(indices)
 
     train_idx, valid_idx = indices[split:], indices[:split]
@@ -87,17 +86,17 @@ def get_train_valid_loader(data_dir,
     valid_sampler = SubsetRandomSampler(valid_idx)
     if args.centralized == 1:
          train_loader = torch.utils.data.DataLoader(
-              train_dataset, batch_size=batch_size, sampler=train_sampler,
+              train_dataset, batch_size=args.batch_size, sampler=train_sampler,
               pin_memory=pin_memory,drop_last=False)
          valid_loader = torch.utils.data.DataLoader(
-        valid_dataset, batch_size=batch_size, sampler=valid_sampler,
+        valid_dataset, batch_size=args.batch_size, sampler=valid_sampler,
         pin_memory=pin_memory,drop_last=False)
     else:
          train_loader = torch.utils.data.DataLoader(
-              train_dataset, batch_size=batch_size, sampler=train_sampler, num_workers = args.num_workers,
+              train_dataset, batch_size=args.batch_size, sampler=train_sampler, num_workers = args.num_workers,
               pin_memory=pin_memory,drop_last=False)
          valid_loader = torch.utils.data.DataLoader(
-        valid_dataset, batch_size=batch_size, sampler=valid_sampler, num_workers = args.num_workers
+        valid_dataset, batch_size=args.batch_size, sampler=valid_sampler, num_workers = args.num_workers
         pin_memory=pin_memory,drop_last=False)
 
 
@@ -105,7 +104,6 @@ def get_train_valid_loader(data_dir,
 
 
 def get_test_loader(data_dir,
-                    batch_size,
                     shuffle=True,args, 
                     pin_memory=False):
     """
@@ -142,13 +140,13 @@ def get_test_loader(data_dir,
     )
     if args.centralized ==1:
           data_loader = torch.utils.data.DataLoader(
-              dataset, batch_size=batch_size, shuffle=shuffle,
+              dataset, batch_size=args.batch_size, shuffle=shuffle,
               pin_memory=pin_memory,
          )
      else: 
             data_loader = torch.utils.data.DataLoader(
-              dataset, batch_size=batch_size, shuffle=shuffle,
-              num_workers=num_workers, pin_memory=pin_memory,
+              dataset, batch_size=args.batch_size, shuffle=shuffle,
+              num_workers=args.num_workers, pin_memory=pin_memory,
          )
 
     return data_loader
