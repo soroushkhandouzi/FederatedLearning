@@ -12,10 +12,9 @@ from options import args_parser
 
 
 args = args_parser()
-def get_train_valid_loader(data_dir,
+def get_train_valid_loader(args,
                            valid_size=0.2,
                            shuffle=True,
-                           args,
                            pin_memory=False,
                            ):
     """
@@ -64,12 +63,12 @@ def get_train_valid_loader(data_dir,
 
     # load the dataset
     train_dataset = datasets.CIFAR10(
-        root=data_dir, train=True,
+        root=args.data_dir, train=True,
         download=True, transform=train_transform,
     )
 
     valid_dataset = datasets.CIFAR10(
-        root=data_dir, train=True,
+        root=args.data_dir, train=True,
         download=True, transform=valid_transform,
     )
 
@@ -103,8 +102,8 @@ def get_train_valid_loader(data_dir,
     return (train_loader, valid_loader)
 
 
-def get_test_loader(data_dir,
-                    shuffle=True,args, 
+def get_test_loader(args,
+                    shuffle=True,
                     pin_memory=False):
     """
     Utility function for loading and returning a multi-process
@@ -135,7 +134,7 @@ def get_test_loader(data_dir,
     ])
 
     dataset = datasets.CIFAR10(
-        root=data_dir, train=False,
+        root=args.data_dir, train=False,
         download=True, transform=transform,
     )
     if args.centralized ==1:
