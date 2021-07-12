@@ -4,8 +4,7 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 import random
-
-from options_FedMA import args_parser
+from options import args_parser
 from update import test_inference, validation
 from models import CNN
 from dataset_split import get_train_valid_loader
