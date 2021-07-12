@@ -16,7 +16,7 @@ def get_train_valid_loader(data_dir,
                            random_seed,
                            valid_size=0.2,
                            shuffle=True,
-                           num_workers=4,
+                           num_workers=args,
                            pin_memory=False,
                            ):
     """
