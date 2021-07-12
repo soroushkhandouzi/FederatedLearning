@@ -9,6 +9,8 @@ def args_parser():
     # federated arguments (Notation for the arguments followed from paper)
     parser.add_argument('--data_dir', type=str, default="/Users/fabiana/PycharmProjects/FED_paper/",
                         help="directory of the project")
+    parser.add_argument('--centralized', type=int, default=1,
+                        help="default value = 1 for the centralized model, for the federated put 0")
     parser.add_argument('--epochs', type=int, default=0,
                         help="number of rounds of training")
     parser.add_argument('--communication_rounds', type=int, default=1,
