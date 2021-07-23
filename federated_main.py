@@ -9,6 +9,7 @@ import time
 import pickle
 import numpy as np
 from tqdm import tqdm
+import random
 
 import torch
 from tensorboardX import SummaryWriter
@@ -17,7 +18,7 @@ from options import args_parser
 from update import LocalUpdate, test_inference
 from models import CNN
 from utils import  average_weights, exp_details
-from dataset_split import get_dataset, get_user_groups
+from dataset_split import get_dataset, get_user_groups, get_user_groups_alpha
 from sampling import random_number_images, non_iid_unbalanced, iid_unbalanced, non_iid_balanced, iid_unbalanced
 
 
@@ -25,13 +26,18 @@ from sampling import random_number_images, non_iid_unbalanced, iid_unbalanced, n
 if __name__ == '__main__':
     start_time = time.time()
 
+
     # define paths
     path_project = os.path.abspath('../../Downloads')
     logger = SummaryWriter('../logs')
 
     args = args_parser()
     exp_details(args)
-
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    torch.cuda.manual_seed(args.seed)
+    torch.backends.cudnn.deterministic = True
     if args.gpu:
         torch.cuda.set_device(args.gpu)
     device = 'cuda' if args.gpu else 'cpu'
@@ -39,7 +45,8 @@ if __name__ == '__main__':
 
     # load dataset and user groups
     train_dataset, test_dataset = get_dataset(args)
-    user_groups = get_user_groups(args)
+    #user_groups = get_user_groups(args)
+    user_groups=get_user_groups_alpha(args)
 
 
     # BUILD MODEL
@@ -52,7 +59,7 @@ if __name__ == '__main__':
     # Set the model to train and send it to device.
     global_model.to(device)
     global_model.train()
-    print(global_model)
+    #print(global_model)
 
     # copy weights
     global_weights = global_model.state_dict()
@@ -77,6 +84,7 @@ if __name__ == '__main__':
 
                   local_model = LocalUpdate(args=args, dataset=train_dataset,
                                       idxs=user_groups[idx], logger=logger)
+
                   w, loss = local_model.update_weights(model=copy.deepcopy(global_model), global_round=round)
                   local_weights.append(copy.deepcopy(w))
                   local_losses.append(copy.deepcopy(loss))
@@ -117,13 +125,13 @@ if __name__ == '__main__':
     print("|---- Avg Train Accuracy: {:.2f}%".format(train_accuracy[-1]))
     print("|---- Test Accuracy: {:.2f}%".format(test_acc))
 
-    # Saving the objects train_loss and train_accuracy:
-    #file_name = '../save/objects/{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.\
-       # format(args.dataset, args.model, args.epochs, args.frac, args.iid,
-               #args.local_ep, args.local_bs)
+    #Saving the objects train_loss and train_accuracy
+    file_name = 'C:/Users/Oana Madalina Breban/Downloads/FederatedLearning-main/FederatedLearning-main/{}_{}_{}_{}_{}_{}_{}_alpha{}.pkl'.\
+       format(args.dataset, args.model, args.communication_rounds, args.num_users, args.frac,
+               args.local_ep, args.local_batch_size, args.alpha)
 
-#    with open(file_name, 'wb') as f:
-       #pickle.dump([train_loss, train_accuracy], f)
+    with open(file_name, 'wb') as f:
+       pickle.dump([train_loss, train_accuracy], f)
 
     print('\n Total Run Time: {0:0.4f}'.format(time.time()-start_time))
 
@@ -138,7 +146,7 @@ if __name__ == '__main__':
     plt.plot(range(len(train_loss)), train_loss, color='r')
     plt.ylabel('Training loss')
     plt.xlabel('Communication Rounds')
-    plt.savefig('C:/Users/Oana Madalina Breban/Desktop/federated_new_version/loss_federated.png'.
+    plt.savefig('C:/Users/Oana Madalina Breban/Downloads/FederatedLearning-main/FederatedLearning-main/loss_federated.png'.
                 format(args.dataset, args.model, args.epochs, args.frac,
                         args.iid, args.local_ep, args.local_batch_size))
     #plt.show()
@@ -149,7 +157,7 @@ if __name__ == '__main__':
     plt.plot(range(len(train_accuracy)), train_accuracy, color='k')
     plt.ylabel('Average Accuracy')
     plt.xlabel('Communication Rounds')
-    plt.savefig('C:/Users/Oana Madalina Breban/Desktop/federated_new_version/accuracy_federated.png'.
+    plt.savefig('C:/Users/Oana Madalina Breban/Downloads/FederatedLearning-main/FederatedLearning-main/accuracy_federated.png'.
                 format(args.dataset, args.model, args.epochs, args.frac,
                        args.iid, args.local_ep, args.local_batch_size))
     #plt.show()
