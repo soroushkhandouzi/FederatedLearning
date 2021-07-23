@@ -25,29 +25,27 @@ class LocalUpdate(object):
     def __init__(self, args, dataset, idxs, logger):
         self.args = args
         self.logger = logger
-        self.trainloader, self.validloader, self.testloader = self.train_val_test(
+        self.trainloader, self.testloader = self.train_test(
             dataset, list(idxs))
         self.device = 'cuda' if args.gpu else 'cpu'
         # Default criterion set to NLL loss function
         self.criterion = nn.NLLLoss().to(self.device)
 
-    def train_val_test(self, dataset, idxs):
+    def train_test(self, dataset, idxs):
         """
         Returns train, validation and test dataloaders for a given dataset
         and user indexes.
         """
         # split indexes for train, validation, and test (80, 10, 10)
         idxs_train = idxs[:int(0.8*len(idxs))]
-        idxs_val = idxs[int(0.8*len(idxs)):int(0.9*len(idxs))]
-        idxs_test = idxs[int(0.9*len(idxs)):]
+        idxs_test = idxs[int(0.8*len(idxs)):]
 
         trainloader = DataLoader(DatasetSplit(dataset, idxs_train),
                                  batch_size=self.args.local_batch_size, shuffle=True, drop_last = False)
-        validloader = DataLoader(DatasetSplit(dataset, idxs_val),
-                                 batch_size=self.args.local_batch_size, shuffle=False, drop_last=False)
+        #maybe add num_workers
         testloader = DataLoader(DatasetSplit(dataset, idxs_test),
                                 batch_size=self.args.local_batch_size, shuffle=False)
-        return trainloader, validloader, testloader
+        return trainloader, testloader
 
     def update_weights(self, model, global_round):
         # Set mode to train model
@@ -81,7 +79,7 @@ class LocalUpdate(object):
                 self.logger.add_scalar('loss', loss.item())
                 batch_loss.append(loss.item())
                 epoch_loss.append(sum(batch_loss)/len(batch_loss))
-
+            #print(model.state_dict())
         return model.state_dict(), sum(epoch_loss) / len(epoch_loss)
 
     def inference(self, model):
