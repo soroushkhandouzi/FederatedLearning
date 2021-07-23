@@ -92,11 +92,11 @@ def get_train_valid_loader(args,
         pin_memory=pin_memory,drop_last=False)
     else:
          train_loader = torch.utils.data.DataLoader(
-              train_dataset, batch_size=args.batch_size, sampler=train_sampler, num_workers = args.num_workers,
-              pin_memory=pin_memory,drop_last=False)
+            train_dataset, batch_size=args.batch_size, sampler=train_sampler, num_workers = args.num_workers,
+            pin_memory=pin_memory,drop_last=False)
          valid_loader = torch.utils.data.DataLoader(
-        valid_dataset, batch_size=args.batch_size, sampler=valid_sampler, num_workers = args.num_workers
-        pin_memory=pin_memory,drop_last=False)
+            valid_dataset, batch_size=args.batch_size, sampler=valid_sampler, num_workers = args.num_workers,
+            pin_memory=pin_memory,drop_last=False)
 
 
     return (train_loader, valid_loader)
@@ -138,15 +138,15 @@ def get_test_loader(args,
         download=True, transform=transform,
     )
     if args.centralized ==1:
-          data_loader = torch.utils.data.DataLoader(
-              dataset, batch_size=args.batch_size, shuffle=shuffle,
-              pin_memory=pin_memory,
-         )
-     else: 
-            data_loader = torch.utils.data.DataLoader(
-              dataset, batch_size=args.batch_size, shuffle=shuffle,
-              num_workers=args.num_workers, pin_memory=pin_memory,
-         )
+        data_loader = torch.utils.data.DataLoader(
+            dataset, batch_size=args.batch_size, shuffle=shuffle,
+            pin_memory=pin_memory,
+        )
+    else:
+        data_loader = torch.utils.data.DataLoader(
+            dataset, batch_size=args.batch_size, shuffle=shuffle,
+            num_workers=args.num_workers, pin_memory=pin_memory,
+        )
 
     return data_loader
 

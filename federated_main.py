@@ -18,7 +18,7 @@ from options import args_parser
 from update import LocalUpdate, test_inference
 from models import CNN
 from utils import  average_weights, exp_details
-from dataset_split import get_dataset, get_user_groups, get_user_groups_alpha
+from dataset_split import get_dataset, get_user_groups
 from sampling import random_number_images, non_iid_unbalanced, iid_unbalanced, non_iid_balanced, iid_unbalanced
 
 
@@ -45,8 +45,8 @@ if __name__ == '__main__':
 
     # load dataset and user groups
     train_dataset, test_dataset = get_dataset(args)
-    #user_groups = get_user_groups(args)
-    user_groups=get_user_groups_alpha(args)
+    user_groups = get_user_groups(args)
+    #user_groups=get_user_groups_alpha(args)
 
 
     # BUILD MODEL
