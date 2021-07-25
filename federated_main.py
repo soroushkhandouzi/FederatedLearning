@@ -19,6 +19,8 @@ from update import LocalUpdate, test_inference
 from models import CNN
 from utils import  average_weights, exp_details
 from dataset_split import get_dataset, get_user_groups
+from models_fedma import pdm_prepare_weights,pdm_prepare_freq,partition_data
+from models_fedma import layer_group_descent as pdm_multilayer_group_descent
 from sampling import random_number_images, non_iid_unbalanced, iid_unbalanced, non_iid_balanced, iid_unbalanced
 
 
@@ -81,17 +83,36 @@ if __name__ == '__main__':
 
 
         for idx in idxs_users:
+            print(idx)
+            local_model = LocalUpdate(args=args, dataset=train_dataset,
+                                  idxs=user_groups[idx], logger=logger)
 
-                  local_model = LocalUpdate(args=args, dataset=train_dataset,
-                                      idxs=user_groups[idx], logger=logger)
+            w, loss = local_model.update_weights(model=copy.deepcopy(global_model), global_round=round)
 
-                  w, loss = local_model.update_weights(model=copy.deepcopy(global_model), global_round=round)
-                  local_weights.append(copy.deepcopy(w))
-                  local_losses.append(copy.deepcopy(loss))
-
+            local_weights.append(copy.deepcopy(w))
+            local_losses.append(copy.deepcopy(loss))
         # update global weights
-        global_weights = average_weights(local_weights)
+        if args.comm_type == "fedavg":
+            global_weights = average_weights(local_weights)
+        elif args.comm_type == "fedma":
+            batch_weights = pdm_prepare_weights(global_model)
+            n_classes = args.net_config
+            print(n_classes)
+            n_classes = n_classes[-1]
+            cls_freqs = partition_data(train_dataset,test_dataset,args.n_nets)
+            batch_freqs = pdm_prepare_freq(cls_freqs,n_classes)
+            gammas = [1.0, 1e-3, 50.0] if gamma is None else [gamma]
+            sigmas = [1.0, 0.1, 0.5] if sigma is None else [sigma]
+            sigma0s = [1.0, 10.0] if sigma0 is None else [sigma0]
 
+            for gamma, sigma, sigma0 in product(gammas, sigmas, sigma0s):
+                print("Gamma: ", gamma, "Sigma: ", sigma, "Sigma0: ", sigma0)
+            hungarian_weights = pdm_multilayer_group_descent(
+                batch_weights, sigma0_layers=sigma0, sigma_layers=sigma, batch_frequencies=batch_freqs, it=it,
+                gamma_layers=gamma
+            )
+        else:
+            print("you did not choose a correct communication type")
         # update global weights
         global_model.load_state_dict(global_weights)
 

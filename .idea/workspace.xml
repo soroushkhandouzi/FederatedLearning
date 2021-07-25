@@ -1,11 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="6136951b-9e9a-411a-8b18-a183b423ade8" name="Default Changelist" comment="" />
+    <list default="true" id="6136951b-9e9a-411a-8b18-a183b423ade8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/models_fedma.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/federated_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/federated_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/options.py" beforeDir="false" afterPath="$PROJECT_DIR$/options.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/update.py" beforeDir="false" afterPath="$PROJECT_DIR$/update.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1viacY9cYwgb1v0OQt3ujdc9TrU" />
   <component name="ProjectViewState">
@@ -76,34 +110,49 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
     <state x="399" y="211" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1627047752137">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="399" y="211" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1280.680@0.0.1280.680" timestamp="1627047752137" />
-    <state width="1899" height="281" key="GridCell.Tab.0.bottom" timestamp="1627049009809">
+    <state x="740" y="-805" key="FileChooserDialogImpl" timestamp="1627051551746">
       <screen x="0" y="-1080" width="1920" height="1040" />
     </state>
-    <state width="1899" height="281" key="GridCell.Tab.0.bottom/0.0.1280.680/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1627049009809" />
+    <state x="740" y="-805" key="FileChooserDialogImpl/0.0.1280.680/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1627051551746" />
+    <state width="1899" height="324" key="GridCell.Tab.0.bottom" timestamp="1627236478521">
+      <screen x="0" y="-1080" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="324" key="GridCell.Tab.0.bottom/0.0.1280.680/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1627236478521" />
     <state width="1259" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1627047918759" />
-    <state width="1899" height="281" key="GridCell.Tab.0.center" timestamp="1627049009809">
+    <state width="1899" height="324" key="GridCell.Tab.0.center" timestamp="1627236478521">
       <screen x="0" y="-1080" width="1920" height="1040" />
     </state>
-    <state width="1899" height="281" key="GridCell.Tab.0.center/0.0.1280.680/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1627049009809" />
+    <state width="1899" height="324" key="GridCell.Tab.0.center/0.0.1280.680/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1627236478521" />
     <state width="1259" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1627047918759" />
-    <state width="1899" height="281" key="GridCell.Tab.0.left" timestamp="1627049009808">
+    <state width="1899" height="324" key="GridCell.Tab.0.left" timestamp="1627236478521">
       <screen x="0" y="-1080" width="1920" height="1040" />
     </state>
-    <state width="1899" height="281" key="GridCell.Tab.0.left/0.0.1280.680/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1627049009808" />
+    <state width="1899" height="324" key="GridCell.Tab.0.left/0.0.1280.680/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1627236478520" />
     <state width="1259" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1627047918759" />
-    <state width="1899" height="281" key="GridCell.Tab.0.right" timestamp="1627049009809">
+    <state width="1899" height="324" key="GridCell.Tab.0.right" timestamp="1627236478521">
       <screen x="0" y="-1080" width="1920" height="1040" />
     </state>
-    <state width="1899" height="281" key="GridCell.Tab.0.right/0.0.1280.680/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1627049009809" />
+    <state width="1899" height="324" key="GridCell.Tab.0.right/0.0.1280.680/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1627236478521" />
     <state width="1259" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1627047918759" />
-    <state x="667" y="-961" width="585" height="801" key="find.popup" timestamp="1627048642339">
+    <state x="870" y="-979" width="992" height="823" key="find.popup" timestamp="1627212102571">
       <screen x="0" y="-1080" width="1920" height="1040" />
     </state>
-    <state x="667" y="-961" width="585" height="801" key="find.popup/0.0.1280.680/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1627048642339" />
+    <state x="870" y="-979" width="992" height="823" key="find.popup/0.0.1280.680/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1627212102571" />
   </component>
 </project>

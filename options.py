@@ -98,5 +98,6 @@ def args_parser():
                         help='which type of communication strategy is going to be used: fedma/fedavg/...layerwise/blockwise')
     parser.add_argument('--comm_round', type=int, default=2,
                         help='how many round of communications we shoud use')
+    parser.add_argument('--net_config', type=list, default=[3072, 100, 10])
     args = parser.parse_args()
     return args
